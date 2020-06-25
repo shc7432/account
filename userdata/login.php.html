@@ -30,6 +30,7 @@ function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 </script>
+<script src="verify.js"></script>
 </head>
 <body>
 
@@ -38,6 +39,7 @@ function getRandom(min, max) {
 <form method="post" action="" id=loginForm>
 Username: <input type=text><br>
 Password: <input type=password><br>
+<span>Captcha: <input type=text> <span id=verifycode02></span><br><span>
 <button type=submit>Sign in</button>
 </form>
 <div style="font-size: 8px;">Don't have account?<a class=typeToggle>Sign up</a></div>
@@ -73,6 +75,18 @@ location.href="login.php?type=signup&returnto="+returnto;
 }
 typetog[1].onclick=function(){
 location.href="login.php?type=signin&returnto="+returnto;
+}
+
+var verifycode01=new GVerify({id: "verifycode01"});
+var verifycode02=new GVerify({id: "verifycode02"});
+
+loginForm.onsubmit=function(){
+event.preventDefault();
+
+}
+newForm.onsubmit=function(){
+event.preventDefault();
+
 }
 })()
 </script>
