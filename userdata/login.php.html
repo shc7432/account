@@ -101,8 +101,8 @@ typetog[1].onclick=function(){
 location.href="login.php?type=signin&returnto="+returnto;
 }
 
-var verifycode01.src=getRandom(100000,999999);
-var verifycode02.src=getRandom(100000,999999);
+var verifycode01.src=textToImg(getRandom(100000,999999));
+var verifycode02.src=textToImg(getRandom(100000,999999));
 
 loginForm.onsubmit=function(){
 event.preventDefault();
