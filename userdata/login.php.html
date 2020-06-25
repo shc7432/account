@@ -40,7 +40,7 @@ Username: <input type=text><br>
 Password: <input type=password><br>
 <button type=submit>Sign in</button>
 </form>
-<div style="font-size: 8px;">Don't have account?<a class=typeToggle>Sign in</a></div>
+<div style="font-size: 8px;">Don't have account?<a class=typeToggle>Sign up</a></div>
 </div>
 
 <div id=signup hidden>
@@ -48,7 +48,7 @@ Password: <input type=password><br>
 <form method="post" action="" id=newForm>
 Username: <input type=text><br>
 Password: <input type=password><br>
-
+Captcha: <input type=text> <span id=verifycode01></span><br>
 <button type=submit>Sign up</button>
 </form>
 <div style="font-size: 8px;">Have a account?<a class=typeToggle>Sign in</a></div>
@@ -65,6 +65,15 @@ return;
 if(type=="signin") { signin.hidden=0 } else 
 if(type=="signup") { signup.hidden=0 } else 
 document.documentElement.innerHTML='{"error":"Wrong parameter \\\"type\\\""}'
+
+var typetog=document.querySelectorAll(".typeToggle");
+typetog[0].href=typetog[1].href="javascript:";
+typetog[0].onclick=function(){
+location.href="login.php?type=signup&returnto="+returnto;
+}
+typetog[1].onclick=function(){
+location.href="login.php?type=signin&returnto="+returnto;
+}
 })()
 </script>
 
