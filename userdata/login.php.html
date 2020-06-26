@@ -105,16 +105,17 @@ location.href="login.php?type=signin&returnto="+returnto;
 }
 
 var rightverify={};
-verifycode01.onclick=verifycode02.onclick=function(a){
+var vfy=function(a){
 var r=String(getRandom(100000,999999));
 rightverify[a.dataset.vid]=CryptoJS.md5(r);
 a.src=textToImg(r,20,"#"+getRandom(100000,999999));
 }
-(function rRunVCode(){
-verifycode01.onclick(verifycode01);
-verifycode02.onclick(verifycode02);
+function rRunVCode(){
+vfy(verifycode01);
+vfy(verifycode02);
 setTimeout(rRunVCode,60000)
-})()
+}
+rRunVCode();
 loginForm.onsubmit=function(){
 event.preventDefault();
 
