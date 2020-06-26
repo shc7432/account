@@ -116,13 +116,13 @@ window.htmlToImg=function(){
     var context = canvas2.getContext("2d");
     context.scale(2, 2);
     return html2canvas(arguments[0], { canvas: canvas2 }).then(function(canvas) {
-    return canvas.toDataURL("image/png");
+    arguments[1].src = canvas.toDataURL("image/png");
     });
 }
-verifycode01.onclick=function(){
+verifycode01.onclick=verifycode02.onclick=function(){
 var r=getRandom(100000,999999);
 var el=document.createElement("del").appendChild(document.createTextNode(String(r)));
-this.innerHTML='<img src="'+htmlToImg(el)+'">';
+htmlToImg(el,this);
 }
 loginForm.onsubmit=function(){
 event.preventDefault();
