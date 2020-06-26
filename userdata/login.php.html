@@ -75,7 +75,7 @@ Password: <input type=password><br>
 <form method="post" action="" id=newForm>
 Username: <input type=text id=un2><br>
 Password: <input type=password id=pw2><br>
-Captcha: <input type=text id=vc2> <img id=verifycode01><br>
+Captcha: <input type=text id=vc2> <span id=verifycode01>Get captcha</span><br>
 <button type=submit>Sign up</button>
 <div id=result2 style="color:red;"></div>
 </form>
@@ -103,28 +103,34 @@ typetog[1].onclick=function(){
 location.href="login.php?type=signin&returnto="+returnto;
 }
 
-var vcode={};
-function verifycode(elem,name){
-	var btn=document.createElement("del");
-var a=getRandom(100000,999999);
-	btn.appendChild(document.createTextNode(a));
- htmlToImg(btn,function(src){
-elem.innerHTML=elem.src=src;
-vcode[name]=new Object();
-vcode[name].num=CryptoJS.md5(a);
-vcode[name].verify=function(t){
-if(CryptoJS.md5(t)==num) {return 1;} else return 0;
+loadjs("https://html2canvas.hertzen.com/dist/html2canvas.js")
+window.htmlToImg=function(){
+    if(typeof arguments[0] == "object") {var _canvas=arguments[0]} else retutn false;
+    var canvas2 = document.createElement("canvas");
+    var w = parseInt(window.getComputedStyle(_canvas).width);
+    var h = parseInt(window.getComputedStyle(_canvas).height);
+    canvas2.width = w * 2;
+    canvas2.height = h * 2;
+    canvas2.style.width = w + "px";
+    canvas2.style.height = h + "px";
+    var context = canvas2.getContext("2d");
+    context.scale(2, 2);
+    return html2canvas(arguments[0], { canvas: canvas2 }).then(function(canvas) {
+    return canvas.toDataURL("image/png");
+    });
 }
-})
+verifycode01.onclick=function(){
+var r=getRandom(100000,999999);
+var el=document.createElement("del").appendChild(document.createTextNode(String(r)));
+this.innerHTML='<img src="'+htmlToImg(el)+'">';
 }
-verifycode(verifycode01,"verify1");verifycode(verifycode02,"verify2");
 loginForm.onsubmit=function(){
 event.preventDefault();
 
 }
 newForm.onsubmit=function(){
 event.preventDefault();
-if(vcode.verify1.verify(vc2)){
+if(1){
 
 } else {
 result2.innerHTML="Captcha is wrong."
