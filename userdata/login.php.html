@@ -91,8 +91,8 @@ if(!type) {
 document.documentElement.innerHTML='{"error":"Type is not defined."}'
 return;
 }
-if(type=="signin") { signin.hidden=0;document.title="signin" } else 
-if(type=="signup") { signup.hidden=0;document.title="signup" } else 
+if(type=="signin") { signin.hidden=0;document.title="Sign in" } else 
+if(type=="signup") { signup.hidden=0;document.title="Sign up" } else 
 document.documentElement.innerHTML='{"error":"Wrong parameter \\\"type\\\""}'
 
 var typetog=document.querySelectorAll(".typeToggle");
@@ -104,9 +104,8 @@ typetog[1].onclick=function(){
 location.href="login.php?type=signin&returnto="+returnto;
 }
 
-loadjs("")
 window.htmlToImg=function(){
-    if(typeof arguments[0] == "object") {var _canvas=arguments[0]} else retutn (false);
+    if(typeof arguments[0] == "object") {var _canvas=arguments[0]} else return (false);
     var canvas2 = document.createElement("canvas");
     var w = parseInt(window.getComputedStyle(_canvas).width);
     var h = parseInt(window.getComputedStyle(_canvas).height);
@@ -141,6 +140,8 @@ setTimeout('result2.innerHTML=""',2000)
 })()
 </script>
 
+<canvas id=testCanvas hidden></canvas>
+<span id=temp hidden></span>
 <span id=disabledjs>User disabled javascript.
 <script>disabledjs.hidden=1;</script></span>
 
