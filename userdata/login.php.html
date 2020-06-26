@@ -64,7 +64,7 @@ textToImg = function (text,fontsize,fontcolor){
 <form method="post" action="" id=loginForm>
 Username: <input type=text><br>
 Password: <input type=password><br>
-<span hidden>Captcha: <input type=text> <img id=verifycode02><br><span>
+<span hidden>Captcha: <input type=text> <img id=verifycode02><br></span>
 <button type=submit>Sign in</button>
 </form>
 <div style="font-size: 8px;">Don't have account?<a class=typeToggle>Sign up</a></div>
@@ -73,15 +73,16 @@ Password: <input type=password><br>
 <div id=signup hidden>
 <h1>Sign up</h1>
 <form method="post" action="" id=newForm>
-Username: <input type=text><br>
-Password: <input type=password><br>
-Captcha: <input type=text> <img id=verifycode01><br>
+Username: <input type=text id=un2><br>
+Password: <input type=password id=pw2><br>
+Captcha: <input type=text id=vc2> <img id=verifycode01><br>
 <button type=submit>Sign up</button>
+<div id=result2 style="color:red;"></div>
 </form>
 <div style="font-size: 8px;">Have a account?<a class=typeToggle>Sign in</a></div>
 </div>
 
-<script>
+<script defer>
 (function(){
 var type=getUrlValue("type");
 var returnto=getUrlValue("returnto");
@@ -89,8 +90,8 @@ if(!type) {
 document.documentElement.innerHTML='{"error":"Type is not defined."}'
 return;
 }
-if(type=="signin") { signin.hidden=0 } else 
-if(type=="signup") { signup.hidden=0 } else 
+if(type=="signin") { signin.hidden=0;document.title="signin" } else 
+if(type=="signup") { signup.hidden=0;document.title="signup" } else 
 document.documentElement.innerHTML='{"error":"Wrong parameter \\\"type\\\""}'
 
 var typetog=document.querySelectorAll(".typeToggle");
@@ -102,13 +103,33 @@ typetog[1].onclick=function(){
 location.href="login.php?type=signin&returnto="+returnto;
 }
 
+var vcode={};
+function verifycode(elem,name){
+	var btn=document.createElement("del");
+var a=getRandom(100000,999999);
+	btn.appendChild(document.createTextNode(a));
+ htmlToImg(btn,function(src){
+elem.innerHTML=elem.src=src;
+vcode[name]=new Object();
+vcode[name].num=CryptoJS.md5(a);
+vcode[name].verify=function(t){
+if(CryptoJS.md5(t)==num) {return 1;} else return 0;
+}
+})
+}
+verifycode(verifycode01,"verify1");verifycode(verifycode02,"verify2");
 loginForm.onsubmit=function(){
 event.preventDefault();
 
 }
 newForm.onsubmit=function(){
 event.preventDefault();
+if(vcode.verify1.verify(vc2)){
 
+} else {
+result2.innerHTML="Captcha is wrong."
+setTimeout('result2.innerHTML=""',2000)
+}
 }
 })()
 </script>
