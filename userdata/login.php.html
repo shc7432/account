@@ -106,9 +106,9 @@ location.href="login.php?type=signin&returnto="+returnto;
 
 var rightverify={};
 verifycode01.onclick=verifycode02.onclick=function(){
-var r=getRandom(100000,999999);
+var r=String(getRandom(100000,999999));
 rightverify[this.dataset.vid]=CryptoJS.md5(r);
-this.src=textToImg(r);
+this.src=textToImg(r,20,"#"+getRandom(100000,999999));
 }
 loginForm.onsubmit=function(){
 event.preventDefault();
