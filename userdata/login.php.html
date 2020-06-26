@@ -108,26 +108,7 @@ var rightverify={};
 var vfy=function(a){
 var r=String(getRandom(100000,999999));
 rightverify[a.dataset.vid]=CryptoJS.MD5(r);
-temp.innerHTML=r;
-vfypng(temp,a);
-}
-var vfypng=function(){
-    if(typeof arguments[0] == "object") {var _canvas=arguments[0]} else return (false);
-    var canvas2 = document.createElement("canvas");
-    var w = parseInt(window.getComputedStyle(_canvas).width);
-    var h = parseInt(window.getComputedStyle(_canvas).height);
-    canvas2.width = w * 2;
-    canvas2.height = h * 2;
-    canvas2.style.width = w + "px";
-    canvas2.style.height = h + "px";
-    var context = canvas2.getContext("2d");
-    context.scale(2, 2);
-    var arg1=arguments[1];
-    html2canvas(arguments[0], { backgroundColor: "test" }).then(function(canvas) {
-    var src=canvas.toDataURL("image/png");
-    arg1.src=src;
-    temp.innerHTML="";
-    });
+a.src=textToImg(r,20,"#"+getRandom(100000,15999984).toString(16));
 }
 function rRunVCode(){
 vfy(verifycode01);
