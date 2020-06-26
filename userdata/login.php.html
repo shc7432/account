@@ -105,11 +105,16 @@ location.href="login.php?type=signin&returnto="+returnto;
 }
 
 var rightverify={};
-verifycode01.onclick=verifycode02.onclick=function(){
+verifycode01.onclick=verifycode02.onclick=function(a){
 var r=String(getRandom(100000,999999));
-rightverify[this.dataset.vid]=CryptoJS.md5(r);
-this.src=textToImg(r,20,"#"+getRandom(100000,999999));
+rightverify[a.dataset.vid]=CryptoJS.md5(r);
+a.src=textToImg(r,20,"#"+getRandom(100000,999999));
 }
+(function rRunVCode(){
+verifycode01.onclick(verifycode01);
+verifycode02.onclick(verifycode02);
+setTimeout(rRunVCode,60000)
+})()
 loginForm.onsubmit=function(){
 event.preventDefault();
 
