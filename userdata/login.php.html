@@ -107,7 +107,7 @@ location.href="login.php?type=signin&returnto="+returnto;
 var rightverify={};
 var vfy=function(a){
 var r=String(getRandom(100000,999999));
-rightverify[a.dataset.vid]=CryptoJS.md5(r);
+rightverify[a.dataset.vid]=CryptoJS.MD5(r);
 a.src=textToImg(r,20,"#"+getRandom(100000,999999));
 }
 function rRunVCode(){
@@ -122,7 +122,7 @@ event.preventDefault();
 }
 newForm.onsubmit=function(){
 event.preventDefault();
-if(rightverify.signup==CryptoJS.md5(vc2.value)){
+if(rightverify.signup==CryptoJS.MD5(vc2.value)){
 
 } else {
 result2.innerHTML="Captcha is wrong."
