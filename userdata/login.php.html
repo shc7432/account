@@ -79,6 +79,7 @@ Password: <input type=password id=pw2><br>
 Captcha: <input type=text id=vc2> <img id=verifycode01 data-vid=signup alt="Get Captcha"><br>
 <button type=submit>Sign up</button>
 <div id=result2 style="color:red;"></div>
+<div id=result4 style="color:green;"></div>
 </form>
 <div style="font-size: 8px;">Have a account?<a class=typeToggle>Sign in</a></div>
 </div>
@@ -86,7 +87,7 @@ Captcha: <input type=text id=vc2> <img id=verifycode01 data-vid=signup alt="Get 
 <script defer>
 (function(){
 var type=getUrlValue("type");
-var returnto=getUrlValue("returnto");
+window.returnto=getUrlValue("returnto");
 if(!type) {
 document.documentElement.innerHTML='{"error":"Type is not defined."}'
 return;
@@ -105,14 +106,14 @@ location.href="login.php?type=signin&returnto="+returnto;
 }
 
 var rightverify={};
-var vfy=function(a){
+var vfy=function(a,b){
 var r=String(getRandom(100000,999999));
-rightverify[a.dataset.vid]=CryptoJS.MD5(r);
-a.src=textToImg(r,20,"#"+getRandom(100000,15999984).toString(16));
+rightverify[a]=CryptoJS.MD5(r);
+b.src=textToImg(r,20,"#"+getRandom(100000,15999984).toString(16));
 }
 function rRunVCode(){
-vfy(verifycode01);
-vfy(verifycode02);
+vfy("v1",verifycode01);
+vfy("v2",verifycode02);
 setTimeout(rRunVCode,60000)
 }
 rRunVCode();
@@ -122,8 +123,33 @@ event.preventDefault();
 }
 newForm.onsubmit=function(){
 event.preventDefault();
-if(rightverify.signup==CryptoJS.MD5(vc2.value)){
-
+if(rightverify.v1==CryptoJS.MD5(vc2.value)){
+var users=userData.users;
+var res;
+for(let i=0;i<users.length;i++){
+if(users[i]==un2.value) res=1;
+}
+if(res){
+result2.innerHTML="Account is already exists."
+setTimeout('result2.innerHTML=""',2000)
+return false;
+}
+users.push({ username: un2.value, password: CryptoJS.MD5(pw2.value),
+uid: userData.uid, rid: userData.rid})
+let ud=new Object();
+ud.uid=getRandom(10000000,99999999);
+ud.id=String(CryptoJS.MD5(ud.uid));
+ud.rid="";
+ud.users=[];
+for(let i=0;i<36;i++){
+let r=getRandom(0,35).toString(36);
+ud.rid+=r;
+}
+ud.time=new Date();
+uds=JSON.stringify(ud);
+localStorage.userData=uds;
+result4.innerHTML="Sign up is success!<a href='javascript:document.query"+
+"SelectorAll(\".typeToggle\")[1].onclick()'>Go to login</a>"
 } else {
 result2.innerHTML="Captcha is wrong."
 setTimeout('result2.innerHTML=""',2000)
@@ -134,6 +160,9 @@ setTimeout('result2.innerHTML=""',2000)
 
 <canvas id=testCanvas hidden></canvas>
 <span id=temp hidden></span>
+<a id=returnToOriginal hidden href="javascript:location.href=returnto;">
+Return to <script>document.write(returnto);if(returnto) returnToOriginal.hidden=0;
+</script></a>
 <span id=disabledjs>User disabled javascript.
 <script>disabledjs.hidden=1;</script></span>
 
