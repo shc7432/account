@@ -87,7 +87,7 @@ Captcha: <input type=text id=vc2> <img id=verifycode01 data-vid=signup alt="Get 
 <script defer>
 (function(){
 var type=getUrlValue("type");
-window.returnto=getUrlValue("returnto");
+window.returnto=(getUrlValue("returnto")||"");
 if(!type) {
 document.documentElement.innerHTML='{"error":"Type is not defined."}'
 return;
