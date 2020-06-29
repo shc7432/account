@@ -108,12 +108,12 @@ location.href="login.php?type=signin&returnto="+returnto;
 var rightverify={};
 var vfy=function(a,b){
 var r=String(getRandom(100000,999999));
-rightverify[a]=CryptoJS.MD5(r);
 b.src=textToImg(r,20,"#"+getRandom(100000,15999984).toString(16));
+return CryptoJS.MD5(r);
 }
 function rRunVCode(){
-vfy("v1",verifycode01);
-vfy("v2",verifycode02);
+rightverify.v1=vfy("v1",verifycode01);
+rightverify.v2=vfy("v2",verifycode02);
 setTimeout(rRunVCode,60000)
 }
 rRunVCode();
